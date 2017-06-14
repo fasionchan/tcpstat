@@ -1,5 +1,5 @@
 /**
- * FileName:   counter.c
+ * FileName:   tcpstat.c
  * Author:     Fasion Chan
  * @contact:   fasionchan@gmail.com
  * @version:   $Id$
