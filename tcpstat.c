@@ -67,7 +67,7 @@ static void stat_sock_list(struct hlist_nulls_head *head, spinlock_t *lock,
 }
 
 
-static int counter_seq_show(struct seq_file *seq, void *v)
+static int tcpstat_seq_show(struct seq_file *seq, void *v)
 {
     // 状态计数器
     unsigned int state_counters[TCP_MAX_STATES] = { 0 };
@@ -110,32 +110,32 @@ static int counter_seq_show(struct seq_file *seq, void *v)
 }
 
 
-static int counter_seq_open(struct inode *inode, struct file *file)
+static int tcpstat_seq_open(struct inode *inode, struct file *file)
 {
-    return single_open(file, counter_seq_show, NULL);
+    return single_open(file, tcpstat_seq_show, NULL);
 }
 
 
-static const struct file_operations counter_file_ops = {
+static const struct file_operations tcpstat_file_ops = {
     .owner   = THIS_MODULE,
-    .open    = counter_seq_open,
+    .open    = tcpstat_seq_open,
     .read    = seq_read,
     .llseek  = seq_lseek,
     .release = single_release
 };
 
 
-static __init int counter_init(void)
+static __init int tcpstat_init(void)
 {
-    proc_create("tcpstat", 0, NULL, &counter_file_ops);
+    proc_create("tcpstat", 0, NULL, &tcpstat_file_ops);
     return 0;
 }
 
 
-static __exit void counter_exit(void)
+static __exit void tcpstat_exit(void)
 {
     remove_proc_entry("tcpstat", NULL);
 }
 
-module_init(counter_init);
-module_exit(counter_exit);
+module_init(tcpstat_init);
+module_exit(tcpstat_exit);
